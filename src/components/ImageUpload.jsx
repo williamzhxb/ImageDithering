@@ -102,6 +102,8 @@ const ImageUpload = () => {
                 }
                 const ditheredCanvas = ditheredCanvasRef.current;
                 const DitheredCtx = ditheredCanvas.getContext('2d');
+                ditheredCanvas.width = imgRef.current.width;
+                ditheredCanvas.height = imgRef.current.height;
                 DitheredCtx.putImageData(imageData, 0, 0);
             
                 setDitheringResult("Applied Threshold Dithering!");
@@ -135,6 +137,7 @@ const ImageUpload = () => {
                     id="file"
                     ref = {fileUploadRef}
                     onChange = {displayUploadedImage}
+                    accept="image/*"
                 />
             </form>
             <label htmlFor="dropdown">Select a dithering option:</label>
