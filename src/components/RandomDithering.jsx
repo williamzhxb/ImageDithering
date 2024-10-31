@@ -1,7 +1,8 @@
 
 import React, { useState, useRef } from "react";
+import DownloadButton from "./DownloadButton";
 
-function RandomDithering({originalCanvasRef, onFinish: finishwork}){
+function RandomDithering({originalCanvasRef, ditheredCanvasRef, onFinish: finishwork}){
 
     function ApplyRandomDithering()
     {
@@ -10,10 +11,9 @@ function RandomDithering({originalCanvasRef, onFinish: finishwork}){
         const imageData = originalCtx.getImageData(0, 0, canvas.width, canvas.height);
         const data = imageData.data;
 
-        // Apply thresholding
         for (let i = 0; i < data.length; i += 4) {
             const grayscale =  (data[i] +  data[i + 1] + data[i + 2]) / 3;
-            const randomThreshold = Math.random() * 255; // Generate a random threshold for each pixel
+            const randomThreshold = Math.random() * 255;
             const color = grayscale > randomThreshold ? 255 : 0;
             data[i] = color;
             data[i + 1] = color;
@@ -29,6 +29,9 @@ function RandomDithering({originalCanvasRef, onFinish: finishwork}){
                 style={{fontSize: '25px' }}
                 onClick={ApplyRandomDithering}>Apply Random Dithering
             </button>
+            <br/>
+            <br/>
+            <DownloadButton{...ditheredCanvasRef}/>
         </div>
     )
 }

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
+import DownloadButton from "./DownloadButton";
 
-function ErrorDiffusionDithering({originalCanvasRef, onFinish: finishwork}){
+function ErrorDiffusionDithering({originalCanvasRef, ditheredCanvasRef, onFinish: finishwork}){
     function ApplyErrorDiffusionDithering()
     {
         const canvas = originalCanvasRef.current;
@@ -34,6 +35,9 @@ function ErrorDiffusionDithering({originalCanvasRef, onFinish: finishwork}){
                 style={{fontSize: '25px' }}
                 onClick={ApplyErrorDiffusionDithering}>Apply Error Diffusion Dithering
             </button>
+            <br/>
+            <br/>
+            <DownloadButton{...ditheredCanvasRef}/>
         </div>
     )
 }

@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
+import DownloadButton from "./DownloadButton";
 
 const Default_DotSize = 1;
 
-function PatternDithering({originalCanvasRef, onFinish: finishwork}){
+function PatternDithering({originalCanvasRef, ditheredCanvasRef, onFinish: finishwork}){
 
     const [dotSize, setDotSize] = useState(Default_DotSize);
     function ApplyPatternDithering()
@@ -52,6 +53,9 @@ function PatternDithering({originalCanvasRef, onFinish: finishwork}){
                 style={{fontSize: '25px' }} 
                 onClick={ApplyPatternDithering}>Apply Pattern Dithering
             </button>
+            <br/>
+            <br/>
+            <DownloadButton{...ditheredCanvasRef}/>
         </div>
     )
 }

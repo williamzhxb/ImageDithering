@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
+import DownloadButton from "./DownloadButton";
 
-function OrderedDithering({originalCanvasRef, onFinish: finishwork}){
+function OrderedDithering({originalCanvasRef, ditheredCanvasRef, onFinish: finishwork}){
     const [matrixPower, setMatrixPower] = useState(1);
     function generateBayerMatrix(n) {
         if (n === 1) {
@@ -48,7 +49,7 @@ function OrderedDithering({originalCanvasRef, onFinish: finishwork}){
                 data[i] = color;       
                 data[i + 1] = color;   
                 data[i + 2] = color;   
-                data[i + 3] = 255;     // Alpha (fully opaque)
+                data[i + 3] = 255; 
             }
         }
         finishwork(imageData);
@@ -70,6 +71,9 @@ function OrderedDithering({originalCanvasRef, onFinish: finishwork}){
                 style={{fontSize: '25px' }} 
                 onClick={ApplyOrderedDithering}>Apply Ordered Dithering
             </button>
+            <br/>
+            <br/>
+            <DownloadButton{...ditheredCanvasRef}/>
         </div>
     )
 }

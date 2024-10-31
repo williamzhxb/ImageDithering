@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import DefaultImage from "../DefaultImage.png"
 import ThresholdDithering from "./ThresholdDithering"
 import RandomDithering from "./RandomDithering"
 import PatternDithering from "./PatternDithering"
@@ -17,15 +18,33 @@ function ImageUpload() {
     
     const fileUploadRef = useRef();
 
-    const imgRef = useRef(new Image());
-
-    const [selectedDitheringMethod, setSelectedDitheringMethod] = useState('threshold');
-
-    const [ditheringResult, setDitheringResult] = useState('');
-
     const originalCanvasRef = useRef(null);
 
     const ditheredCanvasRef = useRef(null);
+
+    var imgRef = useRef(new Image());
+
+    //sets the default image
+    useEffect(() => {
+        const canvas = originalCanvasRef.current;
+        const context = canvas.getContext('2d');
+        const ditheredCanvas = ditheredCanvasRef.current;
+        const ditheredContext = ditheredCanvas.getContext('2d');
+    
+        const img = new Image();
+        img.src = DefaultImage;
+
+        img.onload = () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            context.drawImage(img, 0, 0);
+            ditheredCanvas.width = img.width;
+            ditheredCanvas.height = img.height;
+            ditheredContext.drawImage(img, 0, 0);
+        };
+    }, []);
+
+    const [selectedDitheringMethod, setSelectedDitheringMethod] = useState('threshold');
 
     function DisplayUploadedImage() {
         const uploadedFile = fileUploadRef.current.files[0];
@@ -71,7 +90,7 @@ function ImageUpload() {
             </select>
             <br/>
             {DITHERING_ALGORITHM[selectedDitheringMethod]({
-                originalCanvasRef,
+                originalCanvasRef, ditheredCanvasRef,
                 onFinish: async (resultImageData) => {
                     const ditheredCanvas = ditheredCanvasRef.current;
                     const context = ditheredCanvasRef.current.getContext('2d');
@@ -80,9 +99,6 @@ function ImageUpload() {
                     context.putImageData(resultImageData, 0, 0);
                 }
             })}
-            <br/>
-            <br/>
-            <label id="ditherResult">{ditheringResult}</label>
             <br/>
             <label>Current Image Preview</label>
             <br/>

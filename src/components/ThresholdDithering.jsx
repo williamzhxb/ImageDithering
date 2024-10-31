@@ -1,17 +1,19 @@
 import React, { useState, useRef } from "react";
+import DownloadButton from "./DownloadButton";
 
 const Default_ThreshHold = 128;
 
-function ThresholdDithering({originalCanvasRef, onFinish: finishwork}){
+function ThresholdDithering({originalCanvasRef, ditheredCanvasRef, onFinish: finishwork}){
+
     const [threshholdValue, setThresholdValue] = useState(Default_ThreshHold);
+
     function ApplyThreshholdDithering()
     {
-        const canvas = originalCanvasRef.current;
+        const canvas = originalCanvasRef.current; 
         const originalCtx = canvas.getContext('2d');
         const imageData = originalCtx.getImageData(0, 0, canvas.width, canvas.height);
         const data = imageData.data;
 
-        // Apply thresholding
         for (let i = 0; i < data.length; i += 4) {
             const grayscale =  (data[i] +  data[i + 1] +  data[i + 2]) / 3;
             const color = grayscale > threshholdValue ? 255 : 0;
@@ -38,6 +40,9 @@ function ThresholdDithering({originalCanvasRef, onFinish: finishwork}){
                 style={{fontSize: '25px' }}
                 onClick={ApplyThreshholdDithering}>Apply Threshold Dithering
             </button>
+            <br/>
+            <br/>
+            <DownloadButton{...ditheredCanvasRef}/>
         </div>
     )
 }
