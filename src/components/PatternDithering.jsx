@@ -46,7 +46,12 @@ function PatternDithering({originalCanvasRef, onFinish: finishwork}){
                 onChange={(e) => setDotSize(Number(e.target.value))}
             />
             <br/>
-            <button title="apply Dithering" type="button" onClick={ApplyPatternDithering}>Apply Pattern Dithering</button>
+            <button 
+                title="apply Dithering" 
+                type="button" 
+                style={{fontSize: '25px' }} 
+                onClick={ApplyPatternDithering}>Apply Pattern Dithering
+            </button>
         </div>
     )
 }

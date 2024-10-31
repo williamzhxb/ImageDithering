@@ -32,7 +32,12 @@ function ThresholdDithering({originalCanvasRef, onFinish: finishwork}){
                 onChange={(e) => setThresholdValue(Number(e.target.value))}
             />
             <br/>
-            <button title="apply Dithering" type="button" onClick={ApplyThreshholdDithering}>Apply Threshold Dithering</button>
+            <button 
+                title="apply Dithering" 
+                type="button" 
+                style={{fontSize: '25px' }}
+                onClick={ApplyThreshholdDithering}>Apply Threshold Dithering
+            </button>
         </div>
     )
 }

@@ -47,7 +47,7 @@ function ImageUpload() {
 
     return (
         <div className="relative h-96 w-96">
-            <label>Original Image</label>
+            <label style={{fontSize: '30px' }}>Original Image</label>
             <br/>
             <canvas ref={originalCanvasRef} style={{ border: '1px solid black', marginTop: '10px', maxWidth: '100%', height: 'auto' }} />
             <br/>
@@ -56,12 +56,13 @@ function ImageUpload() {
                     type="file"
                     id="file"
                     ref = {fileUploadRef}
+                    style={{fontSize: '25px' }}
                     onChange = {DisplayUploadedImage}
                     accept="image/*"
                 />
             </form>
             <label htmlFor="dropdown">Select a dithering option:</label>
-            <select id="dropdown" value={selectedDitheringMethod}  onChange={(e) => setSelectedDitheringMethod(e.target.value)}>
+            <select id="dropdown" value={selectedDitheringMethod} style={{fontSize: '25px' }} onChange={(e) => setSelectedDitheringMethod(e.target.value)}>
                 <option value="threshold">Thresholding</option>
                 <option value="random">Random Dithering</option>
                 <option value="pattern">Pattern Dithering</option>

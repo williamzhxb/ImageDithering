@@ -28,7 +28,12 @@ function ErrorDiffusionDithering({originalCanvasRef, onFinish: finishwork}){
     }
     return (
         <div style={{ marginTop: '10px' }}>
-            <button title="apply Dithering" type="button" onClick={ApplyErrorDiffusionDithering}>Apply Error Diffusion Dithering</button>
+            <button 
+                title="apply Dithering" 
+                type="button" 
+                style={{fontSize: '25px' }}
+                onClick={ApplyErrorDiffusionDithering}>Apply Error Diffusion Dithering
+            </button>
         </div>
     )
 }

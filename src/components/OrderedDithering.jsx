@@ -64,7 +64,12 @@ function OrderedDithering({originalCanvasRef, onFinish: finishwork}){
                 onChange={(e) => setMatrixPower(Number(e.target.value))}
             />
             <br/>
-            <button title="apply Dithering" type="button" onClick={ApplyOrderedDithering}>Apply Ordered Dithering</button>
+            <button 
+                title="apply Dithering" 
+                type="button"
+                style={{fontSize: '25px' }} 
+                onClick={ApplyOrderedDithering}>Apply Ordered Dithering
+            </button>
         </div>
     )
 }

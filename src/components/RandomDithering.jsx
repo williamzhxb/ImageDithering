@@ -23,7 +23,12 @@ function RandomDithering({originalCanvasRef, onFinish: finishwork}){
     }
     return (
         <div style={{ marginTop: '10px' }}>
-            <button title="apply Dithering" type="button" onClick={ApplyRandomDithering}>Apply Random Dithering</button>
+            <button 
+                title="apply Dithering" 
+                type="button" 
+                style={{fontSize: '25px' }}
+                onClick={ApplyRandomDithering}>Apply Random Dithering
+            </button>
         </div>
     )
 }
