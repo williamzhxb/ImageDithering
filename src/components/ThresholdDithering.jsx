@@ -13,7 +13,8 @@ function ThresholdDithering({originalCanvasRef, ditheredCanvasRef, onFinish: fin
         const originalCtx = canvas.getContext('2d');
         const imageData = originalCtx.getImageData(0, 0, canvas.width, canvas.height);
         const data = imageData.data;
-
+        console.log(originalCanvasRef);
+        console.log(imageData);
         for (let i = 0; i < data.length; i += 4) {
             const grayscale =  (data[i] +  data[i + 1] +  data[i + 2]) / 3;
             const color = grayscale > threshholdValue ? 255 : 0;

@@ -21,9 +21,10 @@ function ImageUpload() {
     const originalCanvasRef = useRef(null);
 
     const ditheredCanvasRef = useRef(null);
-
+    
     var imgRef = useRef(new Image());
-
+    imgRef.current.src = DefaultImage;
+    
     //sets the default image
     useEffect(() => {
         const canvas = originalCanvasRef.current;
