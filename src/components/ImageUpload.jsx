@@ -25,6 +25,8 @@ function ImageUpload() {
 
     const [originalImageData, setOriginalImageData] = useState(null);
     const [ditheredImageData, setDitheredImageData] = useState(null);
+    const [undoStack, setUndoStack] = useState([]);
+    const [redoStack, setRedoStack] = useState([]);
    
     const imgRef = useRef(new Image());
 
@@ -67,8 +69,22 @@ function ImageUpload() {
         }
     }
 
-    const handleDithering = (resultImageData) => {
-        setDitheredImageData(resultImageData);
+    const handleUndo = () => {
+        if (undoStack.length > 0) {
+            const lastState = undoStack.pop();
+            setRedoStack((prev) => [...prev, ditheredImageData]);
+            setDitheredImageData(lastState);
+            setUndoStack([...undoStack]);
+        }
+    };
+
+    const handleRedo = () => {
+        if (redoStack.length > 0) {
+            const nextState = redoStack.pop();
+            setUndoStack((prev) => [...prev, ditheredImageData]);
+            setDitheredImageData(nextState);
+            setRedoStack([...redoStack]);
+        }
     };
 
     return (
@@ -119,8 +135,13 @@ function ImageUpload() {
                 originalImageData,
                 onFinish: async (resultImageData) => {
                     setDitheredImageData(resultImageData);
+                    setUndoStack((prev) => [...prev, ditheredImageData]);
+                    setRedoStack([]);
                 }
             })}
+            <button onClick={handleUndo} style={{ marginRight: '10px', fontSize: '20px' }}>Undo</button>
+            <button onClick={handleRedo} style={{ marginRight: '10px', fontSize: '20px' }}>Redo</button>
+            <br/>
             <DownloadButton imageData={ditheredImageData} style= {{marginTop:'20px'}}/>
         </div>
     )
