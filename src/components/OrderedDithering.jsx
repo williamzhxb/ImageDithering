@@ -52,8 +52,7 @@ function OrderedDithering({originalImageData, onFinish: finishwork}){
                 const color = grayscale > threshold ? 255 : 0;
                 data[i] = color;       
                 data[i + 1] = color;   
-                data[i + 2] = color;   
-                data[i + 3] = 255; 
+                data[i + 2] = color;    
             }
         }
         finishwork(ditheredImageData);

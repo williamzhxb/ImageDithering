@@ -5,7 +5,6 @@ const Default_DotSize = 1;
 function PatternDithering({originalImageData, onFinish: finishwork}){
 
     const [dotSize, setDotSize] = useState(Default_DotSize);
-    const canvasRef = useRef(null);
 
     function ApplyPatternDithering()
     {
@@ -22,7 +21,7 @@ function PatternDithering({originalImageData, onFinish: finishwork}){
                 const i = (y * newCanvas.width + x) * 4;
                 const grayscale = (data[i] + data[i + 1] + data[i + 2]) / 3;
 
-                const radius = ((255 - grayscale) / 255) * (dotSize / 2);
+                const radius = Math.round(grayscale / 255) * (dotSize / 2);
 
                 newCtx.beginPath();
                 newCtx.arc(x + dotSize / 2, y + dotSize / 2, radius, 0, Math.PI * 2);

@@ -8,6 +8,8 @@ import ErrorDiffusionDithering from "./ErrorDiffusionDithering"
 import DownloadButton from "./DownloadButton";
 import ResizableCanvas from "./ResizableCanvas";
 
+
+//A map matching user selection to the actual dithering function components
 const DITHERING_ALGORITHM = {
     threshold: (props) => <ThresholdDithering {...props}/>,
     random: (props) => <RandomDithering {...props}/>,
@@ -48,6 +50,7 @@ function ImageUpload() {
         };
     }, []);
 
+    //To displayed the image after user upload an image file
     function DisplayUploadedImage() {
         const uploadedFile = fileUploadRef.current.files[0];
         if (uploadedFile) {
