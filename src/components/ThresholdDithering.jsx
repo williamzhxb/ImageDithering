@@ -1,37 +1,38 @@
 import React, { useState, useRef } from "react";
-import DownloadButton from "./DownloadButton";
 
 const Default_ThreshHold = 128;
 
-function ThresholdDithering({originalCanvasRef, ditheredCanvasRef, onFinish: finishwork}){
+function ThresholdDithering({originalImageData, onFinish: finishwork}){
 
-    const [threshholdValue, setThresholdValue] = useState(Default_ThreshHold);
+    const [thresholdValue, setThresholdValue] = useState(Default_ThreshHold);
 
-    function ApplyThreshholdDithering()
-    {
-        const canvas = originalCanvasRef.current; 
-        const originalCtx = canvas.getContext('2d');
-        const imageData = originalCtx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
-        console.log(originalCanvasRef);
-        console.log(imageData);
+    function applyThresholdDithering() {
+        const ditheredImageData = new ImageData(
+            new Uint8ClampedArray(originalImageData.data),
+            originalImageData.width,
+            originalImageData.height
+        );
+
+        const data = ditheredImageData.data;
+
         for (let i = 0; i < data.length; i += 4) {
-            const grayscale =  (data[i] +  data[i + 1] +  data[i + 2]) / 3;
-            const color = grayscale > threshholdValue ? 255 : 0;
-            data[i] = color;  
-            data[i + 1] = color;
-            data[i + 2] = color;
+            const grayscale = (data[i] + data[i + 1] + data[i + 2]) / 3;
+            const color = grayscale > thresholdValue ? 255 : 0;
+            data[i] = color;       
+            data[i + 1] = color;   
+            data[i + 2] = color;  
         }
-        finishwork(imageData);
+
+        finishwork(ditheredImageData);
     }
     return (
         <div style={{ marginTop: '10px' }}>
-            <label>Threshold: {threshholdValue}</label>
+            <label>Threshold: {thresholdValue}</label>
             <input
                 type="range"
                 min="0"
                 max="255"
-                value={threshholdValue}
+                value={thresholdValue}
                 onChange={(e) => setThresholdValue(Number(e.target.value))}
             />
             <br/>
@@ -39,11 +40,8 @@ function ThresholdDithering({originalCanvasRef, ditheredCanvasRef, onFinish: fin
                 title="apply Dithering" 
                 type="button" 
                 style={{fontSize: '25px' }}
-                onClick={ApplyThreshholdDithering}>Apply Threshold Dithering
+                onClick={applyThresholdDithering}>Apply Threshold Dithering
             </button>
-            <br/>
-            <br/>
-            <DownloadButton{...ditheredCanvasRef}/>
         </div>
     )
 }

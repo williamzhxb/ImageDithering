@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
-import DownloadButton from "./DownloadButton";
 
-function OrderedDithering({originalCanvasRef, ditheredCanvasRef, onFinish: finishwork}){
+function OrderedDithering({originalImageData, onFinish: finishwork}){
+
     const [matrixPower, setMatrixPower] = useState(1);
+
     function generateBayerMatrix(n) {
         if (n === 1) {
             return [
@@ -29,17 +30,20 @@ function OrderedDithering({originalCanvasRef, ditheredCanvasRef, onFinish: finis
     }
     function ApplyOrderedDithering()
     {
-        const canvas = originalCanvasRef.current;
-        const originalCtx = canvas.getContext('2d');
-        const imageData = originalCtx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
+        const ditheredImageData = new ImageData(
+            new Uint8ClampedArray(originalImageData.data),
+            originalImageData.width,
+            originalImageData.height
+        );
+
+        const data = ditheredImageData.data;
 
         const bayerMatrix = generateBayerMatrix(matrixPower);
         const matrixLength = bayerMatrix.length;
 
-        for (let y = 0; y < canvas.height; y++) {
-            for (let x = 0; x < canvas.width; x++) {
-                const i = (y * canvas.width + x) * 4;
+        for (let y = 0; y < ditheredImageData.height; y++) {
+            for (let x = 0; x < ditheredImageData.width; x++) {
+                const i = (y * ditheredImageData.width + x) * 4;
         
                 const grayscale = (data[i] + data[i + 1] + data[i + 2]) / 3;
         
@@ -52,18 +56,20 @@ function OrderedDithering({originalCanvasRef, ditheredCanvasRef, onFinish: finis
                 data[i + 3] = 255; 
             }
         }
-        finishwork(imageData);
+        finishwork(ditheredImageData);
     }
     return (
         <div style={{ marginTop: '10px' }}>
-            <label>Matrix Power (Defines the length of the matrix by (2 ^ matrix power)): </label>
+            <label>Matrix Power: {matrixPower}</label>
             <input
-                type="number"
+                type="range"
                 value={matrixPower}
                 min="1"
                 max="5"
                 onChange={(e) => setMatrixPower(Number(e.target.value))}
             />
+            <br/>
+            <label>Matrix Power Defines the size of the matrix(size = 2 ^ matrix power)</label>
             <br/>
             <button 
                 title="apply Dithering" 
@@ -71,9 +77,6 @@ function OrderedDithering({originalCanvasRef, ditheredCanvasRef, onFinish: finis
                 style={{fontSize: '25px' }} 
                 onClick={ApplyOrderedDithering}>Apply Ordered Dithering
             </button>
-            <br/>
-            <br/>
-            <DownloadButton{...ditheredCanvasRef}/>
         </div>
     )
 }
