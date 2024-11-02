@@ -7,8 +7,13 @@ CD into the folder path then use command [npm start] to start the web applicatio
 
 Feature:
 -Dynmaically resizing the image uploaded by user into fixed canvas size so it fits to the screen(512 x 512)
+
 -Provides threshold, pattern, ordered, random and error diffusion dithering function for users to choose from.
+
 -Having preview for users to see what the image looks like after applying the dithering function (Current Image)
+
 -Undo and Redo (Undo: switch the current image with preivous image or Redo: after undo, switch back to the image before undo)
+
 -User should be able to download the image as showing in the current image canvas
+
 -Provided an image found on wikipedia page for dithering as a default image for user to test with
