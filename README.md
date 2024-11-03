@@ -2,7 +2,7 @@
 
 ## Overview
 
-An React project allowing user to upload image and apply various image dithering methods to the image. User will be allowed to download the image after applying the dithering method they chose. 
+A React project allowing user to upload image and apply various image dithering methods to the image. User will be allowed to download the image after applying the dithering method they chose. 
 
 ## Setup & Run:
 
